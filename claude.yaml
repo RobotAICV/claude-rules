@@ -1,0 +1,30 @@
+# NAME: Claude Professional Ruleset
+# UPDATED: 2026-03-13
+# DESCRIPTION: 针对 Claude AI 的深度优化分流规则。结构采用“精确后缀优先 + 关键词兜底”的专业逻辑。
+
+payload:
+  # --- 核心业务域名 (Core Domains) ---
+  # 优先采用后缀匹配，匹配速度更快且更严谨
+  - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN-SUFFIX,claude.com
+  - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN-SUFFIX,anthropic.ai
+  - DOMAIN-SUFFIX,claudeusercontent.com  # 核心：解决图片与文件处理
+
+  # --- 资源分发与性能 (Static Content / CDN) ---
+  - DOMAIN,s-cdn.anthropic.com           # Anthropic 自有 CDN
+  - DOMAIN,cdn.usefathom.com             # 本地化/统计资源
+
+  # --- 关键第三方依赖 (Dependencies) ---
+  # 这些域名如果不走代理，可能导致登录转圈或界面功能缺失
+  - DOMAIN-SUFFIX,statsig.com            # 功能开关控制，极重要
+  - DOMAIN-SUFFIX,auth0.com              # 用户鉴权
+  - DOMAIN-SUFFIX,segment.io             # 行为分析
+  - DOMAIN-SUFFIX,segment.com            # 行为分析
+  - DOMAIN-SUFFIX,sentry.io              # 错误监控
+  - DOMAIN,challenges.cloudflare.com     # 解决人机验证码加载
+
+  # --- 关键词补充/兜底 (Fallback / Keyword Match) ---
+  # 作为最后一道防线，抓取所有未在上述列表中定义的包含核心词的关联域名
+  - DOMAIN-KEYWORD,claude
+  - DOMAIN-KEYWORD,anthropic
