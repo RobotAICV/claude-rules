@@ -10,6 +10,7 @@ payload:
   - DOMAIN-SUFFIX,anthropic.ai
   - DOMAIN-SUFFIX,claudeusercontent.com
   - DOMAIN,s-cdn.anthropic.com
+  - DOMAIN-SUFFIX,perplexity.ai
 
   # --- OpenAI / ChatGPT 核心域名 ---
   - DOMAIN-SUFFIX,chatgpt.com
